@@ -18,7 +18,7 @@ const filterTask = (filter, task) => {
     return !task.isDone;
 }
 
-class AppOriginal extends React.Component {
+class TodoOriginal extends React.Component {
     state = {
         todoInput: '',
         filter: FILTER_STATUSES.ALL,
@@ -83,4 +83,4 @@ const mapDispatchToProps = (dispatch) => ({
     toggleTask: (id) => dispatch(TasksActionCreators.toggleTask(id)),
 })
 
-export const App = connect(mapStateToProps, mapDispatchToProps)(AppOriginal)
+export const Todo = connect(mapStateToProps, mapDispatchToProps)(TodoOriginal);
