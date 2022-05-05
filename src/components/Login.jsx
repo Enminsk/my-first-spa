@@ -1,36 +1,44 @@
 import React from 'react';
+import css from './login.module.css';
 
 
 export class Login extends React.Component {
     state = {
         login: '',
         password: '',
-    }
+    };
 
-    dengerError = () => {
-        if (this.state.login.length > 5) {
-            return <h3>Минимальная длинна поля 5 символов</h3>;
-        }
-        return this.setState({ isModalVisible: true })
-    }
+    inputChangeHandler = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    };
+
+    clickHandler = ({ isAuth }) => {
+        const LOGIN = process.env.REACT_APP_LOGIN;
+        const PASSWORD = process.env.REACT_APP_PASSWORD;
+/*         const isValid = this.state.login === LOGIN && this.state.password === PASSWORD; */
+
+        this.setState(() => ({
+            isAuth: true,
+            login: this.state.login === LOGIN ? "" : 'Не верное имя пользователя',
+            password: this.state.password === PASSWORD ? "" : 'Не верны пароль',
+        }))
+    };
 
     render() {
-        const { login, password } = this.state;
-
-        return <div>
-            <h1>SIGN UP</h1>
-            <form>
-                <label>
+        
+        return <div className={css.login}>
+            <h1 className={css.title}>SIGN UP</h1>
+            <form className={css.auth}>
+                <label className={css.label}>
                     Login:
-                    <input type="text" value={login} onChange={(e) => this.setState({ login: e.target.value })} />
+                    <input className={css.input} type='text' name='login' value={this.state.login} onChange={this.inputChangeHandler} />
                 </label>
-                {this.state.login && <span>Минимальная длинна поля 5 символов</span>}
-                <label>
+                <label className={css.label}>
                     Password:
-                    <input type="Password" value={password} onChange={(e) => this.setState({ password: e.target.value })} />
+                    <input className={css.input} type='Password' name='password' value={this.state.password} onChange={this.inputChangeHandler} />
                 </label>
-                {this.state.password && <span>Минимальная длинна поля 5 символов</span>}
             </form>
+            <button className={css.button} type="button" onClick={this.clickHandler}>GET STARTED</button>
         </div>
     }
 }
